@@ -292,6 +292,11 @@ extension POIViewController {
         let brownCylinderNode = buildCylinderNode(location: brownCylinder3D, radius: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, color: .brown)
         nodes.append(brownCylinderNode)
 
+        let redBox2D = currentCoordinates.coordinateWithBearing(bearing: 30, distanceMeters: (5.0).nauticalMilesToMeters)
+        let redBox3D = CLLocation(coordinate: redBox2D, altitude: 300)
+        let redBoxNode = buildBoxNode(location: redBox3D, width: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, length: (1.0).nauticalMilesToMeters, color: .red)
+        nodes.append(redBoxNode)
+
         return nodes
 	} // buildNewDemoData() -? [LocationNode]
 
@@ -379,6 +384,10 @@ extension POIViewController {
 
     func buildCylinderNode(location: CLLocation, radius: CLLocationDistance, height: CLLocationDistance, color: UIColor) -> CylinderNode {
         return CylinderNode(location: location, radius: radius, height: height, color: color)
+    }
+
+    func buildBoxNode(location: CLLocation, width: CLLocationDistance, height: CLLocationDistance, length: CLLocationDistance, color: UIColor) -> BoxNode {
+        return BoxNode(location: location, width: width, height: height, length: length, color: color)
     }
 
     func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
