@@ -22,6 +22,10 @@ public class BoxNode: LocationNode {
 		shapeNode.name = ""
 		shapeNode.removeFlicker()
 
+//		shapeNode.eulerAngles.x = Float.pi / 4						// Pitch: rotation about the node’s x-axis
+//		shapeNode.eulerAngles.y = Float.pi / 4						// Yaw:   rotation about the node’s y-axis
+//		shapeNode.eulerAngles.z = Float.pi / 4						// Roll:  rotation about the node’s z-axis
+
 		addChildNode(shapeNode)										// Attach shape node to ourself
 
 	} // init(location:radius:color:)
