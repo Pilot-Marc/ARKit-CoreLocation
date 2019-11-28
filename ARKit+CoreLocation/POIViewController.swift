@@ -297,6 +297,11 @@ extension POIViewController {
         let redBoxNode = buildBoxNode(location: redBox3D, width: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, length: (1.0).nauticalMilesToMeters, color: .red)
         nodes.append(redBoxNode)
 
+        let purpleText2D = currentCoordinates.coordinateWithBearing(bearing: 40, distanceMeters: (5.0).nauticalMilesToMeters)
+        let purpleText3D = CLLocation(coordinate: purpleText2D, altitude: 300)
+        let purpleTextNode = buildTextNode(location: purpleText3D, string: "Hello World", size: 1000, color: .purple)
+        nodes.append(purpleTextNode)
+
         return nodes
 	} // buildNewDemoData() -? [LocationNode]
 
@@ -388,6 +393,10 @@ extension POIViewController {
 
     func buildBoxNode(location: CLLocation, width: CLLocationDistance, height: CLLocationDistance, length: CLLocationDistance, color: UIColor) -> BoxNode {
         return BoxNode(location: location, width: width, height: height, length: length, color: color)
+    }
+
+    func buildTextNode(location: CLLocation, string: String, size: CGFloat, color: UIColor) -> TextNode {
+        return TextNode(location: location, string: string, size: size, color: color)
     }
 
     func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
