@@ -63,11 +63,15 @@ public class BillboardNode: LocationNode {
 
 	//**************************************************************************************************
 	// Convenience routine (converts UIView -> UIImage)
-	// TODO: Need to drop iOS 9 support first
+	// TODO: Clean this up when we drop iOS 9 support 
 	//**************************************************************************************************
-//	public convenience init(location: CLLocation, view: UIView) {
-//		self.init(location: location, image: view.image)
-//	}
+	public convenience init(location: CLLocation, view: UIView) {
+		if #available(iOS 10.0, *) {
+			self.init(location: location, image: view.image)
+		} else {
+			self.init(location: location, image: UIImage())
+		}
+	}
 
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")

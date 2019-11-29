@@ -260,11 +260,11 @@ extension POIViewController {
         let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
         nodes.append(canaryWharf)
 
-        let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
-        nodes.append(applePark)
+//      let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
+//      nodes.append(applePark)
 
-        let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
-        nodes.append(theAlamo)
+//      let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
+//      nodes.append(theAlamo)
 
         return nodes
     }
@@ -277,56 +277,75 @@ extension POIViewController {
 
 		let currentCoordinates = sceneLocationView.sceneLocationManager.currentLocation!.coordinate
 
+		// Static Text Marker: Apple Park
+
+		let appleParkLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 37.334807, longitude: -122.009076), altitude: 100)
+		let appleParkMarker = staticMarker(text: "Apple Park")
+		let appleParkNode = buildBillboardNode(location: appleParkLoc, view: appleParkMarker)
+        nodes.append(appleParkNode)
+
+		// Static Text Marker: The Alamo
+
+		let theAlamaoLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 29.4259671, longitude: -98.4861419), altitude: 300)
+		let theAlamoMarker = staticMarker(text: "The Alamo")
+		let theAlamoNode = buildBillboardNode(location: theAlamaoLoc, view: theAlamoMarker)
+        nodes.append(theAlamoNode)
+
+		// Dynamic Text Marker: Pike's Peak Time Stamp
+
+		let pikesPeakLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 38.8405322, longitude: -105.0442048), altitude: 4705)
+		let pikesPeakMarker = dynamicMarker(text: "ABC")
+		let pikesPeakNode = buildBillboardNode(location: pikesPeakLoc, layer: pikesPeakMarker)
+        nodes.append(pikesPeakNode)
+
+		// Image Marker: One
+
 		let billboardOne2D = currentCoordinates.coordinateWithBearing(bearing: 280, distanceMeters: (300.0).nauticalMilesToMeters)
 		let billboardOne3D = CLLocation(coordinate: billboardOne2D, altitude: 300)
 		let billboardOneNode = buildBillboardNode(location: billboardOne3D, image: UIImage(named: "box4")!)
         nodes.append(billboardOneNode)
+
+		// Image Marker: Two
 
 		let billboardTwo2D = currentCoordinates.coordinateWithBearing(bearing: 300, distanceMeters: (3.0).nauticalMilesToMeters)
 		let billboardTwo3D = CLLocation(coordinate: billboardTwo2D, altitude: 300)
 		let billboardTwoNode = buildBillboardNode(location: billboardTwo3D, image: UIImage(named: "box5")!)
         nodes.append(billboardTwoNode)
 
-		let fluidLayer = CATextLayer()
-		fluidLayer.alignmentMode = .center
-		fluidLayer.fontSize = 14
-		fluidLayer.cornerRadius = 4
-		fluidLayer.foregroundColor = UIColor.black.cgColor
- 		fluidLayer.backgroundColor = UIColor.white.cgColor
-		fluidLayer.frame = CGRect(x:0, y:0, width: 180, height: 36)
-		_ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
- 			fluidLayer.string = "The current time is:\n" + Date().description
- 		}
-
-		let billboardThree2D = currentCoordinates.coordinateWithBearing(bearing: 270, distanceMeters: (3.0).nauticalMilesToMeters)
-		let billboardThree3D = CLLocation(coordinate: billboardThree2D, altitude: 300)
-		let billboardThreeNode = buildBillboardNode(location: billboardThree3D, layer: fluidLayer)
-        nodes.append(billboardThreeNode)
-
 		let greenCircle2D = currentCoordinates.coordinateWithBearing(bearing: 20, distanceMeters: (6.0).nauticalMilesToMeters)
 		let greenCircle3D = CLLocation(coordinate: greenCircle2D, altitude: 300)
 		let greenCircleNode = buildSphereNode(location: greenCircle3D, radius: (1.0).nauticalMilesToMeters, color: .green)
         nodes.append(greenCircleNode)
+
+		// 3D Shape: Yellow Circle
 
 		let yellowCircle2D = currentCoordinates.coordinateWithBearing(bearing: 350, distanceMeters: (6.0).nauticalMilesToMeters)
 		let yellowCircle3D = CLLocation(coordinate: yellowCircle2D, altitude: 300)
 		let yellowCircleNode = buildSphereNode(location: yellowCircle3D, radius: (1.0).nauticalMilesToMeters, color: .yellow)
         nodes.append(yellowCircleNode)
 
+		// 3D Shape: Brown Cylinder
+
         let brownCylinder2D = currentCoordinates.coordinateWithBearing(bearing: 10, distanceMeters: (6.0).nauticalMilesToMeters)
         let brownCylinder3D = CLLocation(coordinate: brownCylinder2D, altitude: 300)
         let brownCylinderNode = buildCylinderNode(location: brownCylinder3D, radius: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, color: .brown)
         nodes.append(brownCylinderNode)
+
+		// 3D Shape: Red Box
 
         let redBox2D = currentCoordinates.coordinateWithBearing(bearing: 30, distanceMeters: (5.0).nauticalMilesToMeters)
         let redBox3D = CLLocation(coordinate: redBox2D, altitude: 300)
         let redBoxNode = buildBoxNode(location: redBox3D, width: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, length: (1.0).nauticalMilesToMeters, color: .red)
         nodes.append(redBoxNode)
 
+		// 3D Shape: Purple Text
+
         let purpleText2D = currentCoordinates.coordinateWithBearing(bearing: 40, distanceMeters: (5.0).nauticalMilesToMeters)
         let purpleText3D = CLLocation(coordinate: purpleText2D, altitude: 300)
         let purpleTextNode = buildTextNode(location: purpleText3D, string: "Hello World", size: 1000, color: .purple)
         nodes.append(purpleTextNode)
+
+		// 3D Shape: Blob
 
 		let cyanBlobCoords: [CLLocationCoordinate2D] = [
 //			CLLocationCoordinate2D(latitude: 29.893, longitude: -97.863),		// hyi
@@ -343,6 +362,8 @@ extension POIViewController {
 
         return nodes
 	} // buildNewDemoData() -? [LocationNode]
+
+	// MARK: - Periodic Timer Callbacks
 
     @objc
     func updateUserLocation() {
@@ -414,7 +435,9 @@ extension POIViewController {
         }
     }
 
-    func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
+	// MARK: - Old Node Builders
+
+	func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
                    altitude: CLLocationDistance, imageName: String) -> LocationAnnotationNode {
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
@@ -422,8 +445,25 @@ extension POIViewController {
         return LocationAnnotationNode(location: location, image: image)
     }
 
+    func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
+                       altitude: CLLocationDistance, text: String) -> LocationAnnotationNode {
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        label.text = text
+        label.backgroundColor = .green
+        label.textAlignment = .center
+        return LocationAnnotationNode(location: location, view: label)
+    }
+
+	// MARK: - New Node Builders
+
 	func buildBillboardNode(location: CLLocation, image: UIImage) -> BillboardNode {
 		return BillboardNode(location: location, image: image)
+    }
+
+	func buildBillboardNode(location: CLLocation, view: UIView) -> BillboardNode {
+		return BillboardNode(location: location, view: view)
     }
 
 	func buildBillboardNode(location: CLLocation, layer: CALayer) -> BillboardNode {
@@ -450,16 +490,34 @@ extension POIViewController {
         return TextNode(location: location, string: string, size: size, color: color)
     }
 
-    func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
-                       altitude: CLLocationDistance, text: String) -> LocationAnnotationNode {
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let location = CLLocation(coordinate: coordinate, altitude: altitude)
+	// MARK: - Marker Builders
+
+	func staticMarker (text: String) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         label.text = text
-        label.backgroundColor = .green
         label.textAlignment = .center
-        return LocationAnnotationNode(location: location, view: label)
-    }
+		label.textColor = .white
+		label.backgroundColor = UIColor(red: 0.6, green: 0, blue: 0, alpha: 1)
+		label.layer.masksToBounds = true
+		label.layer.cornerRadius = 10
+
+		return label
+	} // staticMarker(text:)
+
+	func dynamicMarker (text: String) -> CALayer {
+		let layer = CATextLayer()
+		layer.alignmentMode = .center
+		layer.fontSize = 14
+		layer.cornerRadius = 4
+		layer.foregroundColor = UIColor.black.cgColor
+ 		layer.backgroundColor = UIColor.white.cgColor
+		layer.frame = CGRect(x: 0, y: 0, width: 180, height: 36)
+		_ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+ 			layer.string = "The current time is:\n" + Date().description
+ 		}
+		return layer
+	} // dynamicMarker
+
 }
 
 // MARK: - LNTouchDelegate
