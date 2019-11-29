@@ -277,6 +277,16 @@ extension POIViewController {
 
 		let currentCoordinates = sceneLocationView.sceneLocationManager.currentLocation!.coordinate
 
+		let billboardOne2D = currentCoordinates.coordinateWithBearing(bearing: 280, distanceMeters: (300.0).nauticalMilesToMeters)
+		let billboardOne3D = CLLocation(coordinate: billboardOne2D, altitude: 300)
+		let billboardOneNode = buildBillboardNode(location: billboardOne3D, image: UIImage(named: "box4")!)
+        nodes.append(billboardOneNode)
+
+		let billboardTwo2D = currentCoordinates.coordinateWithBearing(bearing: 300, distanceMeters: (3.0).nauticalMilesToMeters)
+		let billboardTwo3D = CLLocation(coordinate: billboardTwo2D, altitude: 300)
+		let billboardTwoNode = buildBillboardNode(location: billboardTwo3D, image: UIImage(named: "box5")!)
+        nodes.append(billboardTwoNode)
+
 		let greenCircle2D = currentCoordinates.coordinateWithBearing(bearing: 20, distanceMeters: (6.0).nauticalMilesToMeters)
 		let greenCircle3D = CLLocation(coordinate: greenCircle2D, altitude: 300)
 		let greenCircleNode = buildSphereNode(location: greenCircle3D, radius: (1.0).nauticalMilesToMeters, color: .green)
@@ -394,6 +404,10 @@ extension POIViewController {
         let location = CLLocation(coordinate: coordinate, altitude: altitude)
         let image = UIImage(named: imageName)!
         return LocationAnnotationNode(location: location, image: image)
+    }
+
+	func buildBillboardNode(location: CLLocation, image: UIImage) -> BillboardNode {
+		return BillboardNode(location: location, image: image)
     }
 
     func buildSphereNode(location: CLLocation, radius: CLLocationDistance, color: UIColor) -> SphereNode {
