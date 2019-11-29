@@ -251,14 +251,14 @@ extension POIViewController {
     func buildDemoData() -> [LocationAnnotationNode] {
         var nodes: [LocationAnnotationNode] = []
 
-        let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
-        nodes.append(spaceNeedle)
+//      let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
+//      nodes.append(spaceNeedle)
 
-        let empireStateBuilding = buildNode(latitude: 40.7484, longitude: -73.9857, altitude: 14.3, imageName: "pin")
-        nodes.append(empireStateBuilding)
+//      let empireStateBuilding = buildNode(latitude: 40.7484, longitude: -73.9857, altitude: 14.3, imageName: "pin")
+//      nodes.append(empireStateBuilding)
 
-        let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
-        nodes.append(canaryWharf)
+//      let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
+//      nodes.append(canaryWharf)
 
 //      let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
 //      nodes.append(applePark)
@@ -298,47 +298,67 @@ extension POIViewController {
 		let pikesPeakNode = buildBillboardNode(location: pikesPeakLoc, layer: pikesPeakMarker)
         nodes.append(pikesPeakNode)
 
-		// Image Marker: One
+		// Image Marker: Space Needle
+
+		let spaceNeedleLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 47.6205, longitude: -122.3493), altitude: 225)
+		let spaceNeedleNode = buildBillboardNode(location: spaceNeedleLoc, image: UIImage(named: "pin")!)
+        nodes.append(spaceNeedleNode)
+
+		// Image Marker: Empire State Building
+
+		let empireStateLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 40.7484, longitude: -73.9857), altitude: 14.3)
+		let empireStateNode = buildBillboardNode(location: empireStateLoc, image: UIImage(named: "pin")!)
+        nodes.append(empireStateNode)
+
+		// Image Marker: Canary Warf
+
+		let canaryWarfLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 51.504607, longitude: -0.019592), altitude: 236)
+		let canaryWarfNode = buildBillboardNode(location: canaryWarfLoc, image: UIImage(named: "pin")!)
+        nodes.append(canaryWarfNode)
+
+		// Image Marker: Nearby Image One
 
 		let billboardOne2D = currentCoordinates.coordinateWithBearing(bearing: 280, distanceMeters: (300.0).nauticalMilesToMeters)
 		let billboardOne3D = CLLocation(coordinate: billboardOne2D, altitude: 300)
 		let billboardOneNode = buildBillboardNode(location: billboardOne3D, image: UIImage(named: "box4")!)
         nodes.append(billboardOneNode)
 
-		// Image Marker: Two
+		// Image Marker: Nearby Image Two
 
 		let billboardTwo2D = currentCoordinates.coordinateWithBearing(bearing: 300, distanceMeters: (3.0).nauticalMilesToMeters)
 		let billboardTwo3D = CLLocation(coordinate: billboardTwo2D, altitude: 300)
 		let billboardTwoNode = buildBillboardNode(location: billboardTwo3D, image: UIImage(named: "box5")!)
         nodes.append(billboardTwoNode)
 
+		// Image Marker: Nearby Three
+
 		let greenCircle2D = currentCoordinates.coordinateWithBearing(bearing: 20, distanceMeters: (6.0).nauticalMilesToMeters)
 		let greenCircle3D = CLLocation(coordinate: greenCircle2D, altitude: 300)
 		let greenCircleNode = buildSphereNode(location: greenCircle3D, radius: (1.0).nauticalMilesToMeters, color: .green)
         nodes.append(greenCircleNode)
 
-		// 3D Shape: Yellow Circle
+		// 3D Shape: Nearby Yellow Circle
 
 		let yellowCircle2D = currentCoordinates.coordinateWithBearing(bearing: 350, distanceMeters: (6.0).nauticalMilesToMeters)
 		let yellowCircle3D = CLLocation(coordinate: yellowCircle2D, altitude: 300)
 		let yellowCircleNode = buildSphereNode(location: yellowCircle3D, radius: (1.0).nauticalMilesToMeters, color: .yellow)
         nodes.append(yellowCircleNode)
 
-		// 3D Shape: Brown Cylinder
+		// 3D Shape: Nearby Brown Cylinder
 
         let brownCylinder2D = currentCoordinates.coordinateWithBearing(bearing: 10, distanceMeters: (6.0).nauticalMilesToMeters)
         let brownCylinder3D = CLLocation(coordinate: brownCylinder2D, altitude: 300)
         let brownCylinderNode = buildCylinderNode(location: brownCylinder3D, radius: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, color: .brown)
         nodes.append(brownCylinderNode)
 
-		// 3D Shape: Red Box
+		// 3D Shape: Nearby Red Box
 
         let redBox2D = currentCoordinates.coordinateWithBearing(bearing: 30, distanceMeters: (5.0).nauticalMilesToMeters)
         let redBox3D = CLLocation(coordinate: redBox2D, altitude: 300)
         let redBoxNode = buildBoxNode(location: redBox3D, width: (1.0).nauticalMilesToMeters, height: (1.0).nauticalMilesToMeters, length: (1.0).nauticalMilesToMeters, color: .red)
         nodes.append(redBoxNode)
 
-		// 3D Shape: Purple Text
+		// 3D Shape: Nearby Purple Text
 
         let purpleText2D = currentCoordinates.coordinateWithBearing(bearing: 40, distanceMeters: (5.0).nauticalMilesToMeters)
         let purpleText3D = CLLocation(coordinate: purpleText2D, altitude: 300)
