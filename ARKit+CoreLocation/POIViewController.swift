@@ -287,6 +287,22 @@ extension POIViewController {
 		let billboardTwoNode = buildBillboardNode(location: billboardTwo3D, image: UIImage(named: "box5")!)
         nodes.append(billboardTwoNode)
 
+		let fluidLayer = CATextLayer()
+		fluidLayer.alignmentMode = .center
+		fluidLayer.fontSize = 14
+		fluidLayer.cornerRadius = 4
+		fluidLayer.foregroundColor = UIColor.black.cgColor
+ 		fluidLayer.backgroundColor = UIColor.white.cgColor
+		fluidLayer.frame = CGRect(x:0, y:0, width: 180, height: 36)
+		_ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+ 			fluidLayer.string = "The current time is:\n" + Date().description
+ 		}
+
+		let billboardThree2D = currentCoordinates.coordinateWithBearing(bearing: 270, distanceMeters: (3.0).nauticalMilesToMeters)
+		let billboardThree3D = CLLocation(coordinate: billboardThree2D, altitude: 300)
+		let billboardThreeNode = buildBillboardNode(location: billboardThree3D, layer: fluidLayer)
+        nodes.append(billboardThreeNode)
+
 		let greenCircle2D = currentCoordinates.coordinateWithBearing(bearing: 20, distanceMeters: (6.0).nauticalMilesToMeters)
 		let greenCircle3D = CLLocation(coordinate: greenCircle2D, altitude: 300)
 		let greenCircleNode = buildSphereNode(location: greenCircle3D, radius: (1.0).nauticalMilesToMeters, color: .green)
@@ -408,6 +424,10 @@ extension POIViewController {
 
 	func buildBillboardNode(location: CLLocation, image: UIImage) -> BillboardNode {
 		return BillboardNode(location: location, image: image)
+    }
+
+	func buildBillboardNode(location: CLLocation, layer: CALayer) -> BillboardNode {
+		return BillboardNode(location: location, layer: layer)
     }
 
     func buildSphereNode(location: CLLocation, radius: CLLocationDistance, color: UIColor) -> SphereNode {

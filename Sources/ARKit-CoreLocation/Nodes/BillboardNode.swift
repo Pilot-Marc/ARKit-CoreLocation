@@ -34,10 +34,40 @@ public class BillboardNode: LocationNode {
 
 		addChildNode(shapeNode)										// Attach shape node to ourself
 
-	} // init(location:radius:color:)
+	} // init(location:image:)
 
-	// TODO: UIView -> UIImage convenience routine
-	// TODO: CALyaer init method
+	public init(location: CLLocation, layer: CALayer) {
+		print(#function)
+		super.init(location: location)
+
+		let geometry = SCNPlane(width: layer.bounds.size.width / 100, height: layer.bounds.size.height / 100)	// The node's geometry
+		geometry.firstMaterial!.diffuse.contents = layer
+		geometry.firstMaterial!.lightingModel = .constant
+
+		let shapeNode = AnnotationShape(name: "", view: nil, image: nil, layer: layer)				// Attach geometry to shape node
+		shapeNode.geometry = geometry
+		shapeNode.name = ""
+		shapeNode.removeFlicker()
+
+		let billboardConstraint			= SCNBillboardConstraint()									// Special config because we're a 2D node
+		billboardConstraint.freeAxes 	= SCNBillboardAxis.Y
+		constraints 					= [billboardConstraint]
+
+//		shapeNode.eulerAngles.x = Float.pi / 4						// Pitch: rotation about the node’s x-axis
+//		shapeNode.eulerAngles.y = Float.pi / 4						// Yaw:   rotation about the node’s y-axis
+//		shapeNode.eulerAngles.z = Float.pi / 4						// Roll:  rotation about the node’s z-axis
+
+		addChildNode(shapeNode)										// Attach shape node to ourself
+
+	} // init(location:layer:)
+
+	//**************************************************************************************************
+	// Convenience routine (converts UIView -> UIImage)
+	// TODO: Need to drop iOS 9 support first
+	//**************************************************************************************************
+//	public convenience init(location: CLLocation, view: UIView) {
+//		self.init(location: location, image: view.image)
+//	}
 
 	required public init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
