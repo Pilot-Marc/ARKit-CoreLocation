@@ -302,6 +302,19 @@ extension POIViewController {
         let purpleTextNode = buildTextNode(location: purpleText3D, string: "Hello World", size: 1000, color: .purple)
         nodes.append(purpleTextNode)
 
+		let cyanBlobCoords: [CLLocationCoordinate2D] = [
+//			CLLocationCoordinate2D(latitude: 29.893, longitude: -97.863),		// hyi
+//			CLLocationCoordinate2D(latitude: 30.195, longitude: -97.670),		// aus
+//			CLLocationCoordinate2D(latitude: 30.397, longitude: -97.566),		// kedc
+//			CLLocationCoordinate2D(latitude: 30.474, longitude: -98.121),		// 88r
+			CLLocationCoordinate2D(latitude: 30.679, longitude: -97.679),		// gtu
+//			CLLocationCoordinate2D(latitude: 30.518, longitude: -97.781),		// 40xs
+			CLLocationCoordinate2D(latitude: 30.499, longitude: -97.969),		// kryw
+			CLLocationCoordinate2D(latitude: 30.921, longitude: -97.541),		// 2tx
+		]
+        let cyanBlobNode = buildBlobNode(coords: cyanBlobCoords, floor: 300, height: (3.0).nauticalMilesToMeters, color: UIColor.cyan.withAlphaComponent(0.9))
+        nodes.append(cyanBlobNode)
+
         return nodes
 	} // buildNewDemoData() -? [LocationNode]
 
@@ -393,6 +406,10 @@ extension POIViewController {
 
     func buildBoxNode(location: CLLocation, width: CLLocationDistance, height: CLLocationDistance, length: CLLocationDistance, color: UIColor) -> BoxNode {
         return BoxNode(location: location, width: width, height: height, length: length, color: color)
+    }
+
+    func buildBlobNode(coords: [CLLocationCoordinate2D], floor: CLLocationDistance, height: CLLocationDistance, color: UIColor) -> BlobNode {
+        return BlobNode(coords: coords, floor: floor, height: height, color: color)
     }
 
     func buildTextNode(location: CLLocation, string: String, size: CGFloat, color: UIColor) -> TextNode {
