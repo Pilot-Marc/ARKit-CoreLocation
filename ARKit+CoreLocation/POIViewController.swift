@@ -25,9 +25,6 @@ class POIViewController: UIViewController {
     var userAnnotation: MKPointAnnotation?
     var locationEstimateAnnotation: MKPointAnnotation?
 
-    var updateUserLocationTimer: Timer?
-    var updateInfoLabelTimer: Timer?
-
     var centerMapOnUserLocation: Bool = true
     var routes: [MKRoute]?
 
@@ -47,6 +44,8 @@ class POIViewController: UIViewController {
 
     let adjustNorthByTappingSidesOfScreen = false
     let addNodeByTappingScreen = false
+
+	// MARK: - Scene LifeCycle
 
     class func loadFromStoryboard() -> POIViewController {
         return UIStoryboard(name: "Main", bundle: nil)
@@ -71,7 +70,7 @@ class POIViewController: UIViewController {
 												self?.restartAnimation()
         }
 
-		updateInfoLabelTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+		_ = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
 			self?.updateInfoLabel()
 		}
 
@@ -96,8 +95,8 @@ class POIViewController: UIViewController {
         mapView.isHidden = !showMap
 
         if showMap {
-			updateUserLocationTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
-				self?.updateUserLocation()
+			_ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+				self?.updateUserMapLocation()
 			}
 
             routes?.forEach { mapView.addOverlay($0.polyline) }
@@ -301,7 +300,7 @@ extension POIViewController {
 		// Dynamic Text Marker: Pike's Peak Time Stamp
 
 		let pikesPeakLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 38.8405322, longitude: -105.0442048), altitude: 4705)
-		let pikesPeakMarker = dynamicMarker(text: "")
+		let pikesPeakMarker = dynamicMarker()
 		let pikesPeakNode = buildBillboardNode(location: pikesPeakLoc, layer: pikesPeakMarker)
         nodes.append(pikesPeakNode)
 
@@ -393,7 +392,7 @@ extension POIViewController {
 	// MARK: - Periodic Timer Callbacks
 
     @objc
-    func updateUserLocation() {
+    func updateUserMapLocation() {
         guard let currentLocation = sceneLocationView.sceneLocationManager.currentLocation else {
             return
         }
@@ -436,10 +435,12 @@ extension POIViewController {
                 }
             }
         }
-    }
+
+    } // updateUserMapLocation()
 
     @objc
     func updateInfoLabel() {
+
         if let position = sceneLocationView.currentScenePosition {
             infoLabel.text = " x: \(position.x.short), y: \(position.y.short), z: \(position.z.short)\n"
         }
@@ -460,7 +461,8 @@ extension POIViewController {
             let nodeCount = "\(sceneLocationView.sceneNode?.childNodes.count.description ?? "n/a") ARKit Nodes"
             infoLabel.text!.append(" \(hour.short):\(minute.short):\(second.short):\(nanosecond.short3) • \(nodeCount)")
         }
-    }
+
+    } // updateInfoLabel()
 
 	// MARK: - Node Builders
 
@@ -502,6 +504,7 @@ extension POIViewController {
 
 	// MARK: - Markers
 
+	/// Creates a static view for use in a Billboard Node
 	func staticMarker (text: String) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         label.text = text
@@ -514,7 +517,8 @@ extension POIViewController {
 		return label
 	} // staticMarker(text:)
 
-	func dynamicMarker (text: String) -> CALayer {
+	/// Creates a dynamic view for use in a Billboard Node
+	func dynamicMarker () -> CALayer {
 		let layer = CATextLayer()
 		layer.alignmentMode = .center
 		layer.fontSize = 14
@@ -526,7 +530,7 @@ extension POIViewController {
  			layer.string = "The current time is:\n" + Date().description
  		}
 		return layer
-	} // dynamicMarker
+	} // dynamicMarker()
 
 }
 
