@@ -82,60 +82,6 @@ public class BillboardNode: LocationNode {
 
 	} // deinit
 
-	//**************************************************************************************************
-	// Since Billboard nodes are flat, they have a unique scaling algorithm
-	// TODO: Consolidate with other positioning & scaling methods
-	//**************************************************************************************************
-	override func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
-										 locationNodeLocation nodeLocation: CLLocation,
-										 locationManager: SceneLocationManager,
-										 onCompletion: (() -> Void)) {
-
-		guard let position = scenePosition, let location = locationManager.currentLocation else { return }
-//		guard let annotationNode = annotationNode else { return }
-		guard let annotationNode = childNodes.first as? AnnotationShape else { return }
-
-		SCNTransaction.begin()
-		SCNTransaction.animationDuration = setup ? 0.0 : 0.1
-
-		let distance = self.location(locationManager.bestLocationEstimate).distance(from: location)
-
-		childNodes.first?.renderingOrder = renderingOrder(fromDistance: distance)
-
-		let adjustedDistance = self.adjustedDistance(setup: setup, position: position,
-													 locationNodeLocation: nodeLocation, locationManager: locationManager)
-
-		// The scale of a node with a billboard constraint applied is ignored
-		// The annotation subnode itself, as a subnode, has the scale applied to it
-		let appliedScale = self.scale
-		self.scale = SCNVector3(x: 1, y: 1, z: 1)
-
-		var scale: Float
-
-		if scaleRelativeToDistance {
-			scale = appliedScale.y
-			annotationNode.scale = appliedScale
-			annotationNode.childNodes.forEach { child in
-				child.scale = appliedScale
-			}
-		} else {
-			let scaleFunc = scalingScheme.getScheme()
-			scale = scaleFunc(distance, adjustedDistance)
-
-			annotationNode.scale = SCNVector3(x: scale, y: scale, z: scale)
-			annotationNode.childNodes.forEach { node in
-				node.scale = SCNVector3(x: scale, y: scale, z: scale)
-			}
-		}
-
-		self.pivot = SCNMatrix4MakeTranslation(0, -1.1 * scale, 0)
-
-		SCNTransaction.commit()
-
-		onCompletion()
-
-	} // updatePositionAndScale(setup:scenePosition:locationNodeLocation:locationManager;onCompletion:)
-
 } // BillboardNode class
 
 //**************************************************************************************************
