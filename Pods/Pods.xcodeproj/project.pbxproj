@@ -16,6 +16,7 @@
 		34EDDC3284C8B060ADD0BABE1060E75B /* SceneLocationView+ARSCNViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735479C620D5F49F39DDB873F7BAF391 /* SceneLocationView+ARSCNViewDelegate.swift */; };
 		451CB5B64FF87551065B2D11BBA631EB /* LocationAnnotationNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DC2A6A827498C9727391EF7D6CD9D4 /* LocationAnnotationNode.swift */; };
 		462B4A6FEC5638E4FF676C20D4D8206C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9198131727667F5A36AEE40099328680 /* UIKit.framework */; };
+		499419362392D0ED00F965D5 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499419352392D0ED00F965D5 /* UIView+Extensions.swift */; };
 		499E781423921D920034B441 /* TorusNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499E781323921D920034B441 /* TorusNode.swift */; };
 		49AD379B238EF18B00E82943 /* SphereNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AD379A238EF18B00E82943 /* SphereNode.swift */; };
 		49AD379D239007BE00E82943 /* CylinderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AD379C239007BD00E82943 /* CylinderNode.swift */; };
@@ -105,6 +106,7 @@
 		45EA130D75D380C6CB6806CF6F82AF0D /* Pods-ARKit+CoreLocation-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ARKit+CoreLocation-Info.plist"; sourceTree = "<group>"; };
 		4908963D2B1EBF5A16D4FB7BD208AA9A /* SceneLocationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SceneLocationView.swift; path = "Sources/ARKit-CoreLocation/SceneLocationView.swift"; sourceTree = "<group>"; };
 		4921FD07A419DCC011A75BD743FF53B4 /* ARCL-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ARCL-umbrella.h"; sourceTree = "<group>"; };
+		499419352392D0ED00F965D5 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		499E781323921D920034B441 /* TorusNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorusNode.swift; sourceTree = "<group>"; };
 		49AD379A238EF18B00E82943 /* SphereNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereNode.swift; sourceTree = "<group>"; };
 		49AD379C239007BD00E82943 /* CylinderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CylinderNode.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 		64B6B1EE5FBA35321386751D1BD7E555 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				499419352392D0ED00F965D5 /* UIView+Extensions.swift */,
 				5AEE4E96790BB99015C8C98E1F395205 /* BaseTypes+Extensions.swift */,
 				E3B1BD63454F3D6DB78806287AB1845D /* CGPoint+Extensions.swift */,
 				6256D141AEBF921A73EE1F72E6323BDB /* CLLocation+Extensions.swift */,
@@ -696,6 +699,7 @@
 				6B576E762837AB25CB0803187822FF74 /* LocationNode.swift in Sources */,
 				49AD379D239007BE00E82943 /* CylinderNode.swift in Sources */,
 				49AD37A123901F8200E82943 /* TextNode.swift in Sources */,
+				499419362392D0ED00F965D5 /* UIView+Extensions.swift in Sources */,
 				A8E22072AFAA1C7CAD9E9A973C195B92 /* PolylineNode.swift in Sources */,
 				C1A60CC248ACB113DFCC7AEB64D31887 /* ScalingScheme.swift in Sources */,
 				7A3BA3746F6A2D39A4ADD8379BFA4A5B /* SceneLocationEstimate+Extensions.swift in Sources */,

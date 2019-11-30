@@ -122,18 +122,3 @@ open class LocationAnnotationNode: LocationNode {
         onCompletion()
     }
 }
-
-// MARK: - Image from View
-
-public extension UIView {
-
-    @available(iOS 10.0, *)
-    /// Gets you an image from the view.
-    var image: UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
-        }
-    }
-
-}
