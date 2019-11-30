@@ -148,7 +148,7 @@ class POIViewController: UIViewController {
                 sceneLocationView.moveSceneHeadingClockwise()
             } else if addNodeByTappingScreen {
                 let image = UIImage(named: "pin")!
-                let annotationNode = LocationAnnotationNode(location: nil, image: image)
+				let annotationNode = BillboardNode(location: nil, image: image)
                 annotationNode.scaleRelativeToDistance = false
                 annotationNode.scalingScheme = .normal
                 DispatchQueue.main.async {

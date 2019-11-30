@@ -11,7 +11,7 @@ import ARKit
 
 public class BillboardNode: LocationNode {
 
-	public init(location: CLLocation, image: UIImage) {
+	public init(location: CLLocation?, image: UIImage) {
 		print(#function)
 		super.init(location: location)
 
@@ -36,7 +36,7 @@ public class BillboardNode: LocationNode {
 
 	} // init(location:image:)
 
-	public init(location: CLLocation, layer: CALayer) {
+	public init(location: CLLocation?, layer: CALayer) {
 		print(#function)
 		super.init(location: location)
 
@@ -65,7 +65,7 @@ public class BillboardNode: LocationNode {
 	// Convenience routine (converts UIView -> UIImage)
 	// TODO: Clean this up when we drop iOS 9 support 
 	//**************************************************************************************************
-	public convenience init(location: CLLocation, view: UIView) {
+	public convenience init(location: CLLocation?, view: UIView) {
 		if #available(iOS 10.0, *) {
 			self.init(location: location, image: view.image)
 		} else {
