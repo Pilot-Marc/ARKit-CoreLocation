@@ -234,9 +234,6 @@ extension POIViewController {
             buildDemoData().forEach {
                 sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
             }
-            buildNewDemoData().forEach {
-                sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: $0)
-            }
         }
 
         // There are many different ways to add lighting to a scene, but even this mechanism (the absolute simplest)
@@ -247,32 +244,8 @@ extension POIViewController {
 
     /// Builds the location annotations for a few random objects, scattered across the country
     ///
-    /// - Returns: an array of annotation nodes.
-    func buildDemoData() -> [LocationAnnotationNode] {
-        var nodes: [LocationAnnotationNode] = []
-
-//      let spaceNeedle = buildNode(latitude: 47.6205, longitude: -122.3493, altitude: 225, imageName: "pin")
-//      nodes.append(spaceNeedle)
-
-//      let empireStateBuilding = buildNode(latitude: 40.7484, longitude: -73.9857, altitude: 14.3, imageName: "pin")
-//      nodes.append(empireStateBuilding)
-
-//      let canaryWharf = buildNode(latitude: 51.504607, longitude: -0.019592, altitude: 236, imageName: "pin")
-//      nodes.append(canaryWharf)
-
-//      let applePark = buildViewNode(latitude: 37.334807, longitude: -122.009076, altitude: 100, text: "Apple Park")
-//      nodes.append(applePark)
-
-//      let theAlamo = buildViewNode(latitude: 29.4259671, longitude: -98.4861419, altitude: 300, text: "The Alamo")
-//      nodes.append(theAlamo)
-
-        return nodes
-    }
-
-    /// Builds the location annotations for a few random objects, scattered across the country
-    ///
     /// - Returns: an array of location nodes.
-    func buildNewDemoData() -> [LocationNode] {
+    func buildDemoData() -> [LocationNode] {
 		var nodes: [LocationNode] = []
 
 		let currentCoordinates = sceneLocationView.sceneLocationManager.currentLocation!.coordinate
@@ -294,7 +267,7 @@ extension POIViewController {
 		// Dynamic Text Marker: Pike's Peak Time Stamp
 
 		let pikesPeakLoc = CLLocation(coordinate: CLLocationCoordinate2D(latitude: 38.8405322, longitude: -105.0442048), altitude: 4705)
-		let pikesPeakMarker = dynamicMarker(text: "ABC")
+		let pikesPeakMarker = dynamicMarker(text: "")
 		let pikesPeakNode = buildBillboardNode(location: pikesPeakLoc, layer: pikesPeakMarker)
         nodes.append(pikesPeakNode)
 
@@ -381,7 +354,7 @@ extension POIViewController {
         nodes.append(cyanBlobNode)
 
         return nodes
-	} // buildNewDemoData() -? [LocationNode]
+	} // buildDemoData() -? [LocationNode]
 
 	// MARK: - Periodic Timer Callbacks
 
