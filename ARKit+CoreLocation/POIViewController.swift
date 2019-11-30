@@ -238,7 +238,7 @@ extension POIViewController {
 
 						let joint2D = CLLocationCoordinate2D(latitude: points[i].coordinate.latitude, longitude: points[i].coordinate.longitude)
 						let joint3D = CLLocation(coordinate: joint2D, altitude: altitude)
-						let jointNode = buildSphereNode(location: joint3D, radius: (0.005).nauticalMilesToMeters, color: UIColor.red.withAlphaComponent(0.8))
+						let jointNode = buildTorusNode(location: joint3D, ringRadius: (0.005).nauticalMilesToMeters, pipeRadius: (0.005/3).nauticalMilesToMeters, color: UIColor.red.withAlphaComponent(0.8))
 //						nodes.append(jointNode)
 						sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: jointNode)
 
@@ -356,19 +356,19 @@ extension POIViewController {
 		let billboardTwoNode = buildBillboardNode(location: billboardTwo3D, image: UIImage(named: "box5")!)
         nodes.append(billboardTwoNode)
 
-		// Image Marker: Nearby Three
+		// Image Marker: Nearby Green Sphere
 
 		let greenCircle2D = currentCoordinates.coordinateWithBearing(bearing: 20, distanceMeters: (6.0).nauticalMilesToMeters)
 		let greenCircle3D = CLLocation(coordinate: greenCircle2D, altitude: 300)
 		let greenCircleNode = buildSphereNode(location: greenCircle3D, radius: (1.0).nauticalMilesToMeters, color: .green)
         nodes.append(greenCircleNode)
 
-		// 3D Shape: Nearby Yellow Circle
+		// 3D Shape: Nearby Yellow Torus
 
-		let yellowCircle2D = currentCoordinates.coordinateWithBearing(bearing: 350, distanceMeters: (6.0).nauticalMilesToMeters)
-		let yellowCircle3D = CLLocation(coordinate: yellowCircle2D, altitude: 300)
-		let yellowCircleNode = buildSphereNode(location: yellowCircle3D, radius: (1.0).nauticalMilesToMeters, color: .yellow)
-        nodes.append(yellowCircleNode)
+		let yellowTorus2D = currentCoordinates.coordinateWithBearing(bearing: 340, distanceMeters: (6.0).nauticalMilesToMeters)
+		let yellowTorus3D = CLLocation(coordinate: yellowTorus2D, altitude: 300)
+		let yellowTorusNode = buildTorusNode(location: yellowTorus3D, ringRadius: (1.0).nauticalMilesToMeters, pipeRadius: (0.25).nauticalMilesToMeters, color: .yellow)
+        nodes.append(yellowTorusNode)
 
 		// 3D Shape: Nearby Brown Cylinder
 
@@ -518,6 +518,10 @@ extension POIViewController {
 
     func buildSphereNode(location: CLLocation, radius: CLLocationDistance, color: UIColor) -> SphereNode {
         return SphereNode(location: location, radius: radius, color: color)
+    }
+
+    func buildTorusNode(location: CLLocation, ringRadius: CLLocationDistance, pipeRadius: CLLocationDistance, color: UIColor) -> TorusNode {
+		return TorusNode(location: location, ringRadius: ringRadius, pipeRadius: pipeRadius, color: color)
     }
 
     func buildCylinderNode(location: CLLocation, radius: CLLocationDistance, height: CLLocationDistance, color: UIColor) -> CylinderNode {
