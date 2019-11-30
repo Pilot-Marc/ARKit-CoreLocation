@@ -115,7 +115,7 @@ open class SceneLocationView: ARSCNView {
     public var currentEulerAngles: SCNVector3? { return pointOfView?.eulerAngles }
 
     public internal(set) var locationNodes = [LocationNode]()
-    public internal(set) var polylineNodes = [PolylineNode]()
+//  public internal(set) var polylineNodes = [PolylineNode]()
     public internal(set) var arTrackingType: ARTrackingType = .worldTracking
 
     // MARK: Internal desclarations
@@ -342,105 +342,6 @@ public extension SceneLocationView {
 }
 
 @available(iOS 11.0, *)
-public extension SceneLocationView {
-
-    /// Adds routes to the scene and lets you specify the geometry prototype for the box.
-    /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
-    ///
-    /// - Parameters:
-    ///   - routes: The MKRoute of directions
-    ///   - boxBuilder: A block that will customize how a box is built.
-    func addRoutes(routes: [MKRoute], boxBuilder: BoxBuilder? = nil) {
-        addRoutes(polylines: routes.map { AttributedType(type: $0.polyline,
-                                                         attribute: $0.name) },
-                  boxBuilder: boxBuilder)
-    }
-
-    /// Adds polylines to the scene and lets you specify the geometry prototype for the box.
-    /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
-    ///
-    /// - Parameters:
-    ///   - polylines: The list of attributed MKPolyline to rendered
-    ///   - Δaltitude: difference between box and current user altitude
-    ///   - boxBuilder: A block that will customize how a box is built.
-    func addRoutes(polylines: [AttributedType<MKPolyline>],
-                   Δaltitude: CLLocationDistance = -2.0,
-                   boxBuilder: BoxBuilder? = nil) {
-        guard let altitude = sceneLocationManager.currentLocation?.altitude else {
-            return assertionFailure("we don't have an elevation")
-        }
-        let polyNodes = polylines.map {
-            PolylineNode(polyline: $0.type,
-                         altitude: altitude + Δaltitude,
-                         tag: $0.attribute,
-                         boxBuilder: boxBuilder)
-        }
-
-        polylineNodes.append(contentsOf: polyNodes)
-        polyNodes.forEach {
-            $0.locationNodes.forEach {
-                let locationNodeLocation = self.locationOfLocationNode($0)
-            $0.updatePositionAndScale(setup: true,
-                                      scenePosition: currentScenePosition,
-                                          locationNodeLocation: locationNodeLocation,
-                                      locationManager: sceneLocationManager,
-                                      onCompletion: {})
-            sceneNode?.addChildNode($0)
-        }
-    }
-    }
-
-    func removeRoutes(routes: [MKRoute]) {
-        routes.forEach { route in
-            if let index = polylineNodes.firstIndex(where: { $0.polyline == route.polyline }) {
-                polylineNodes.remove(at: index)
-            }
-        }
-    }
-}
-
-@available(iOS 11.0, *)
-public extension SceneLocationView {
-    /// Adds polylines to the scene and lets you specify the geometry prototype for the box.
-    /// Note: You can provide your own SCNBox prototype to base the direction nodes from.
-    ///
-    /// - Parameters:
-    ///   - polylines: A set of MKPolyline.
-    ///   - boxBuilder: A block that will customize how a box is built.
-    func addPolylines(polylines: [MKPolyline], boxBuilder: BoxBuilder? = nil) {
-
-        guard let altitude = sceneLocationManager.currentLocation?.altitude else {
-            return assertionFailure("we don't have an elevation")
-        }
-        polylines.forEach { (polyline) in
-            polylineNodes.append(PolylineNode(polyline: polyline, altitude: altitude - 2.0, boxBuilder: boxBuilder))
-        }
-
-        polylineNodes.forEach {
-            $0.locationNodes.forEach {
-
-                let locationNodeLocation = self.locationOfLocationNode($0)
-                $0.updatePositionAndScale(setup: true,
-                                          scenePosition: currentScenePosition,
-                                          locationNodeLocation: locationNodeLocation,
-                                          locationManager: sceneLocationManager,
-                                          onCompletion: {})
-
-                sceneNode?.addChildNode($0)
-            }
-        }
-    }
-
-    func removePolylines(polylines: [MKPolyline]) {
-        polylines.forEach { polyline in
-            if let index = polylineNodes.firstIndex(where: { $0.polyline == polyline }) {
-                polylineNodes.remove(at: index)
-            }
-        }
-    }
-}
-
-@available(iOS 11.0, *)
 extension SceneLocationView: SceneLocationManagerDelegate {
     var scenePosition: SCNVector3? { return currentScenePosition }
 
@@ -459,19 +360,6 @@ extension SceneLocationView: SceneLocationManagerDelegate {
 
     /// Updates the position and scale of the `polylineNodes` and the `locationNodes`.
     func updatePositionAndScaleOfLocationNodes() {
-		polylineNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
-			node.locationNodes.forEach { node in
-				let locationNodeLocation = self.locationOfLocationNode(node)
-				node.updatePositionAndScale(
-                    setup: false,
-                    scenePosition: currentScenePosition,
-                    locationNodeLocation: locationNodeLocation,
-                    locationManager: sceneLocationManager) {
-                        self.locationViewDelegate?.didUpdateLocationAndScaleOfLocationNode(
-                            sceneLocationView: self, locationNode: node)
-				} // updatePositionAndScale
-			} // foreach Location node
-		} // foreach Polyline node
 
         locationNodes.filter { $0.continuallyUpdatePositionAndScale }.forEach { node in
             let locationNodeLocation = locationOfLocationNode(node)
@@ -483,7 +371,8 @@ extension SceneLocationView: SceneLocationManagerDelegate {
                         sceneLocationView: self, locationNode: node)
             }
         }
-    }
+
+    } // updatePositionAndScaleOfLocationNodes()
 
     func didAddSceneLocationEstimate(position: SCNVector3, location: CLLocation) {
         locationEstimateDelegate?.didAddSceneLocationEstimate(sceneLocationView: self, position: position, location: location)

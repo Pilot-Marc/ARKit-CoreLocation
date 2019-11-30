@@ -63,6 +63,7 @@ class POIViewController: UIViewController {
                                                queue: nil) { [weak self] _ in
 												self?.pauseAnimation()
         }
+
         // swiftlint:disable:next discarded_notification_center_observer
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification,
                                                object: nil,
@@ -76,13 +77,13 @@ class POIViewController: UIViewController {
 
         // Set to true to display an arrow which points north.
         // Checkout the comments in the property description and on the readme on this.
-//        sceneLocationView.orientToTrueNorth = false
-//        sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
+//      sceneLocationView.orientToTrueNorth = false
+//      sceneLocationView.locationEstimateMethod = .coreLocationDataOnly
 
         sceneLocationView.showAxesNode = true
         sceneLocationView.showFeaturePoints = displayDebugging
         sceneLocationView.locationNodeTouchDelegate = self
-//        sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
+//      sceneLocationView.delegate = self // Causes an assertionFailure - use the `arViewDelegate` instead:
         sceneLocationView.arViewDelegate = self
         sceneLocationView.locationNodeTouchDelegate = self
 
@@ -202,6 +203,7 @@ extension POIViewController {
     /// do anything until the scene has a `currentLocation`.  It "polls" on that
     /// and when a location is finally discovered, the models are added.
     func addSceneModels() {
+
         // 1. Don't try to add the models to the scene until we have a current location
         guard sceneLocationView.sceneLocationManager.currentLocation != nil else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -215,8 +217,6 @@ extension POIViewController {
 
         // 2. If there is a route, show that
         if let routes = routes {
-
-			//----------[New Polyline Algorithm]----------
 
 			routes.forEach({
 
@@ -263,25 +263,6 @@ extension POIViewController {
 
 			}) // foreach route (MKRoute)
 
-			//----------[Old Polyline Algorithm]----------
-
-            sceneLocationView.addRoutes(routes: routes) { distance -> SCNBox in
-                let box = SCNBox(width: 1.75, height: 0.5, length: distance, chamferRadius: 0.25)
-
-//                // Option 1: An absolutely terrible box material set (that demonstrates what you can do):
-//                box.materials = ["box0", "box1", "box2", "box3", "box4", "box5"].map {
-//                    let material = SCNMaterial()
-//                    material.diffuse.contents = UIImage(named: $0)
-//                    return material
-//                }
-
-                // Option 2: Something more typical
-                box.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.7)
-                return box
-            }
-
-			//----------
-
         } else {
             // 3. If not, then show the fixed demo objects
             buildDemoData().forEach {
@@ -295,7 +276,7 @@ extension POIViewController {
 
     }
 
-    /// Builds the location annotations for a few random objects, scattered across the country
+    /// Builds some 2D and 3D nodes for a few random objects, scattered across the country
     ///
     /// - Returns: an array of location nodes.
     func buildDemoData() -> [LocationNode] {
@@ -481,28 +462,7 @@ extension POIViewController {
         }
     }
 
-	// MARK: - Old Node Builders
-
-	func buildNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
-                   altitude: CLLocationDistance, imageName: String) -> LocationAnnotationNode {
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let location = CLLocation(coordinate: coordinate, altitude: altitude)
-        let image = UIImage(named: imageName)!
-        return LocationAnnotationNode(location: location, image: image)
-    }
-
-    func buildViewNode(latitude: CLLocationDegrees, longitude: CLLocationDegrees,
-                       altitude: CLLocationDistance, text: String) -> LocationAnnotationNode {
-        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let location = CLLocation(coordinate: coordinate, altitude: altitude)
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        label.text = text
-        label.backgroundColor = .green
-        label.textAlignment = .center
-        return LocationAnnotationNode(location: location, view: label)
-    }
-
-	// MARK: - New Node Builders
+	// MARK: - Node Builders
 
 	func buildBillboardNode(location: CLLocation, image: UIImage) -> BillboardNode {
 		return BillboardNode(location: location, image: image)
@@ -540,7 +500,7 @@ extension POIViewController {
         return TextNode(location: location, string: string, size: size, color: color)
     }
 
-	// MARK: - Marker Builders
+	// MARK: - Markers
 
 	func staticMarker (text: String) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -598,12 +558,12 @@ extension POIViewController: LNTouchDelegate {
 @available(iOS 11.0, *)
 extension POIViewController {
 	func midPoint (_ first: CLLocationCoordinate2D, _ second: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-		
+
 		return CLLocationCoordinate2D(
 			latitude: (first.latitude + second.latitude) / 2,
 			longitude: (first.longitude + second.longitude) / 2
 		)
-		
+
 	} // midPoint(_:_:)
 }
 
