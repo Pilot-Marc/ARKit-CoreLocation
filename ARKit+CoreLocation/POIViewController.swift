@@ -215,6 +215,56 @@ extension POIViewController {
 
         // 2. If there is a route, show that
         if let routes = routes {
+
+			//----------[New Polyline Algorithm]----------
+
+			routes.forEach({
+
+				$0.steps.forEach({
+					let polyline = $0.polyline
+					let points = polyline.points()
+
+					for i in 0 ..< polyline.pointCount - 1 {
+
+						let altitude = sceneLocationView.sceneLocationManager.currentLocation!.altitude
+
+						let currentLocation = CLLocation(coordinate: points[i].coordinate, altitude: altitude)
+						let nextLocation = CLLocation(coordinate: points[i + 1].coordinate, altitude: altitude)
+
+						let pivotPoint2D = midPoint(currentLocation.coordinate, nextLocation.coordinate)
+						let pivotPoint3D = CLLocation(coordinate: pivotPoint2D, altitude: altitude)
+
+						// Joint Node (between segments)
+
+						let joint2D = CLLocationCoordinate2D(latitude: points[i].coordinate.latitude, longitude: points[i].coordinate.longitude)
+						let joint3D = CLLocation(coordinate: joint2D, altitude: altitude)
+						let jointNode = buildSphereNode(location: joint3D, radius: (0.005).nauticalMilesToMeters, color: UIColor.red.withAlphaComponent(0.8))
+//						nodes.append(jointNode)
+						sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: jointNode)
+
+						// Segment node
+
+						let distance = currentLocation.distance(from: nextLocation)
+						let bearing = 0 - currentLocation.bearing(between: nextLocation)
+
+						let segmentNode = buildBoxNode(location: pivotPoint3D, width: 10, height: 10, length: distance, color: .orange)
+//						nodes.append(segmentNode)
+						sceneLocationView.addLocationNodeWithConfirmedLocation(locationNode: segmentNode)
+
+						// Some segment post-processing that might move elsewhere
+						// Rotate the step segment in the Z direction to connect the two joints
+
+//						segmentNode.childNodes.first!.pivot = SCNMatrix4MakeTranslation(0, 0, 0.5 * Float(distance))
+						segmentNode.childNodes.first!.eulerAngles.y = Float(bearing).degreesToRadians
+
+			        } // foreach segment (MKMultiPoint, MKMultiPoint)
+
+				}) // foreach step (MKRouteStep)
+
+			}) // foreach route (MKRoute)
+
+			//----------[Old Polyline Algorithm]----------
+
             sceneLocationView.addRoutes(routes: routes) { distance -> SCNBox in
                 let box = SCNBox(width: 1.75, height: 0.5, length: distance, chamferRadius: 0.25)
 
@@ -229,6 +279,9 @@ extension POIViewController {
                 box.firstMaterial?.diffuse.contents = UIColor.blue.withAlphaComponent(0.7)
                 return box
             }
+
+			//----------
+
         } else {
             // 3. If not, then show the fixed demo objects
             buildDemoData().forEach {
@@ -537,6 +590,18 @@ extension POIViewController: LNTouchDelegate {
 }
 
 // MARK: - Helpers
+
+@available(iOS 11.0, *)
+extension POIViewController {
+	func midPoint (_ first: CLLocationCoordinate2D, _ second: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+		
+		return CLLocationCoordinate2D(
+			latitude: (first.latitude + second.latitude) / 2,
+			longitude: (first.longitude + second.longitude) / 2
+		)
+		
+	} // midPoint(_:_:)
+}
 
 extension DispatchQueue {
     func asyncAfter(timeInterval: TimeInterval, execute: @escaping () -> Void) {
