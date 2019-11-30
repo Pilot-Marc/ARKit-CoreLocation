@@ -39,7 +39,7 @@
 		A1716C54DDEB635AF8E3976904C9800B /* Pods-Node Demos-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 92639A8406EC7E8F0BE3FF99465B36AD /* Pods-Node Demos-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3C1586E36DB51BE890ED47C28F54B1F /* ARCL-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B82678EA781AA1AAEEF66D706E59C638 /* ARCL-dummy.m */; };
 		BE3B7AE52307413489D56E59E93B18AC /* BaseTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEE4E96790BB99015C8C98E1F395205 /* BaseTypes+Extensions.swift */; };
-		C1A60CC248ACB113DFCC7AEB64D31887 /* ScalingScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E754288B1F80772EBCBFB2712E1783BE /* ScalingScheme.swift */; };
+		C1A60CC248ACB113DFCC7AEB64D31887 /* BillbaordScalingScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E754288B1F80772EBCBFB2712E1783BE /* BillbaordScalingScheme.swift */; };
 		C522C294939CB67D9207D26C688BA19A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE1C87DD65575F3BFF2A2EB472E5344D /* Foundation.framework */; };
 		CC24E1BA5E5D415A242195A809AF06F1 /* SceneLocationEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B8748DCA4404FB797AD1C2E5645AC6 /* SceneLocationEstimate.swift */; };
 		D17EFBF8B90C84B3C3AEDBF57662F81A /* Pods-Node Demos-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 095F19D381916026FC96F1E0D26461A1 /* Pods-Node Demos-dummy.m */; };
@@ -162,7 +162,7 @@
 		E3B1BD63454F3D6DB78806287AB1845D /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		E5F161EEE5C51880997F8C401B7378B3 /* Pods-ARKit+CoreLocation-ARCLTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ARKit+CoreLocation-ARCLTests-umbrella.h"; sourceTree = "<group>"; };
 		E74B36C3684EDC7B2B9CEF7F1EF3F9D8 /* SceneLocationManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SceneLocationManager.swift; sourceTree = "<group>"; };
-		E754288B1F80772EBCBFB2712E1783BE /* ScalingScheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScalingScheme.swift; sourceTree = "<group>"; };
+		E754288B1F80772EBCBFB2712E1783BE /* BillbaordScalingScheme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BillbaordScalingScheme.swift; sourceTree = "<group>"; };
 		ECF447997F85661D06BCD78BBB0C84D3 /* Pods-Node Demos-Node DemosTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Node Demos-Node DemosTests.modulemap"; sourceTree = "<group>"; };
 		F2531731D3BAAAE2EC2572CF9A31B40D /* ARKit_CoreLocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ARKit_CoreLocation.swift; path = "Sources/ARKit-CoreLocation/ARKit_CoreLocation.swift"; sourceTree = "<group>"; };
 		FB4691953588AFC0880DB6E5476C5476 /* Pods-ARKit+CoreLocation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARKit+CoreLocation.debug.xcconfig"; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 				499E781323921D920034B441 /* TorusNode.swift */,
 				49AD37A223903B1300E82943 /* BlobNode.swift */,
 				49AD37A023901F8200E82943 /* TextNode.swift */,
-				E754288B1F80772EBCBFB2712E1783BE /* ScalingScheme.swift */,
+				E754288B1F80772EBCBFB2712E1783BE /* BillbaordScalingScheme.swift */,
 				12DC2A6A827498C9727391EF7D6CD9D4 /* Unused-LocationAnnotationNode.swift */,
 				CE39427678FC7DB55A5A35182704BA6F /* Unused-PolylineNode.swift */,
 			);
@@ -697,7 +697,7 @@
 				49AD379D239007BE00E82943 /* CylinderNode.swift in Sources */,
 				49AD37A123901F8200E82943 /* TextNode.swift in Sources */,
 				499419362392D0ED00F965D5 /* UIView+Extensions.swift in Sources */,
-				C1A60CC248ACB113DFCC7AEB64D31887 /* ScalingScheme.swift in Sources */,
+				C1A60CC248ACB113DFCC7AEB64D31887 /* BillbaordScalingScheme.swift in Sources */,
 				7A3BA3746F6A2D39A4ADD8379BFA4A5B /* SceneLocationEstimate+Extensions.swift in Sources */,
 				CC24E1BA5E5D415A242195A809AF06F1 /* SceneLocationEstimate.swift in Sources */,
 				0A47731094BBA76F99C269726A729E38 /* SceneLocationManager.swift in Sources */,

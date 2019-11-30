@@ -1,5 +1,5 @@
 //
-//  ScalingScheme.swift
+//  BillboardScalingScheme.swift
 //  ARCL
 //
 //  Created by Eric Internicola on 5/17/19.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A set of schemes that can be used to scale a LocationNode.
+/// A set of schemes that can be used to scale a BillbaordNode.
 ///
 /// Values:
 /// - normal: The default way of scaling, Hardcoded value out to 3000 meters, and then 0.75 that factor beyond 3000 m.
