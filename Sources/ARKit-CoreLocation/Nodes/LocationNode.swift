@@ -108,20 +108,24 @@ open class LocationNode: SCNNode {
         }
     }
 
-    internal func adjustedDistance(setup: Bool, position: SCNVector3, locationNodeLocation: CLLocation,
+	//**************************************************************************************************
+	//
+	//**************************************************************************************************
+    internal func adjustedDistance(setup: Bool, position: SCNVector3,
+                                   locationNodeLocation: CLLocation,
                                    locationManager: SceneLocationManager) -> CLLocationDistance {
-        guard let location = locationManager.currentLocation else {
-            return 0.0
-        }
 
-        // Position is set to a position coordinated via the current position
+		guard let location = locationManager.currentLocation else { return 0.0 }
+
         let distance = self.location(locationManager.bestLocationEstimate).distance(from: location)
 
         var locationTranslation = location.translation(toLocation: locationNodeLocation)
         locationTranslation.altitudeTranslation = ignoreAltitude ? 0 : locationTranslation.altitudeTranslation
 
         let adjustedDistance: CLLocationDistance
+
         if locationConfirmed && (distance > 100 || continuallyAdjustNodePositionWhenWithinRange || setup) {
+
             if distance > 100 {
                 //If the item is too far away, bring it closer and scale it down
                 let scale = 100 / Float(distance)
@@ -142,15 +146,18 @@ open class LocationNode: SCNNode {
                                             z: position.z - Float(locationTranslation.latitudeTranslation))
                 self.scale = SCNVector3(x: 1, y: 1, z: 1)
             }
+
         } else {
+
             //Calculates distance based on the distance within the scene, as the location isn't yet confirmed
-            adjustedDistance = Double(position.distance(to: position))
+            adjustedDistance = CLLocationDistance(position.distance(to: position))
 
             scale = SCNVector3(x: 1, y: 1, z: 1)
         }
 
         return adjustedDistance
-    }
+
+    } // adjustedDistance(setup:position:locationNodeLocation:locationManager:)
 
 	//**************************************************************************************************
 	// Scaling algorithm for all location nodes.  Dispatch to 2D or 3D scaling method as appropriate.
