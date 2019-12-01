@@ -156,8 +156,10 @@ open class LocationNode: SCNNode {
 	// Scaling algorithm for all location nodes.  Dispatch to 2D or 3D scaling method as appropriate.
 	// TODO: Should we check for Billboard node, or add an enum property that signifies scaling method?
 	//**************************************************************************************************
-    func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
-                                locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
+    func updatePositionAndScale(setup: Bool = false, scenePosition: SCNVector3?,
+                                locationNodeLocation nodeLocation: CLLocation,
+                                locationManager: SceneLocationManager,
+                                onCompletion: (() -> Void)) {
 
 		if self is BillboardNode {
 			updatePositionAndScale2D(setup: setup, scenePosition: scenePosition, locationNodeLocation: nodeLocation, locationManager: locationManager, onCompletion: onCompletion)
@@ -165,18 +167,17 @@ open class LocationNode: SCNNode {
 			updatePositionAndScale3D(setup: setup, scenePosition: scenePosition, locationNodeLocation: nodeLocation, locationManager: locationManager, onCompletion: onCompletion)
 		}
 
-	} // updatePositionAndScale
+	} // updatePositionAndScale(setup:scenePosition:locationNodeLocation:locationManager:onCompletion:)
 
 	//**************************************************************************************************
 	// Scaling algorithm for flat 2D Billboard nodes
 	//**************************************************************************************************
-	func updatePositionAndScale2D(setup: Bool = false, scenePosition: SCNVector3?,
-										 locationNodeLocation nodeLocation: CLLocation,
-										 locationManager: SceneLocationManager,
-										 onCompletion: (() -> Void)) {
+    func updatePositionAndScale2D(setup: Bool = false, scenePosition: SCNVector3?,
+                                  locationNodeLocation nodeLocation: CLLocation,
+                                  locationManager: SceneLocationManager,
+                                  onCompletion: (() -> Void)) {
 
 		guard let position = scenePosition, let location = locationManager.currentLocation else { return }
-//		guard let annotationNode = annotationNode else { return }
 		guard let annotationNode = childNodes.first as? AnnotationShape else { return }
 
 		SCNTransaction.begin()
@@ -218,24 +219,24 @@ open class LocationNode: SCNNode {
 
 		onCompletion()
 
-	} // updatePositionAndScale2D(setup:scenePosition:locationNodeLocation:locationManager;onCompletion:)
+	} // updatePositionAndScale2D(setup:scenePosition:locationNodeLocation:locationManager:onCompletion:)
 
 	//**************************************************************************************************
 	// Scaling algorithm for 3D nodes (Spheres, Boxes, ...)
 	//**************************************************************************************************
     /// See `LocationAnnotationNode`'s override of this function. Because it doesn't invoke `super`'s version, any changes
     /// made in this file must be repeated in `LocationAnnotationNode`.
-    func updatePositionAndScale3D(setup: Bool = false, scenePosition: SCNVector3?, locationNodeLocation nodeLocation: CLLocation,
-                                locationManager: SceneLocationManager, onCompletion: (() -> Void)) {
-        guard let position = scenePosition, locationManager.currentLocation != nil else {
-            return
-        }
+    func updatePositionAndScale3D(setup: Bool = false, scenePosition: SCNVector3?,
+                                  locationNodeLocation nodeLocation: CLLocation,
+                                  locationManager: SceneLocationManager,
+                                  onCompletion: (() -> Void)) {
+
+		guard let position = scenePosition, let location = locationManager.currentLocation else { return }
 
         SCNTransaction.begin()
         SCNTransaction.animationDuration = setup ? 0.0 : 0.1
 
-        let distance = self.location(locationManager.bestLocationEstimate).distance(from:
-            locationManager.currentLocation ?? nodeLocation)
+        let distance = self.location(locationManager.bestLocationEstimate).distance(from: location)
 
         childNodes.first?.renderingOrder = renderingOrder(fromDistance: distance)
 
@@ -246,7 +247,7 @@ open class LocationNode: SCNNode {
 
         onCompletion()
 
-    } // updatePositionAndScale3D(setup:scenePosition:locationNodeLocation:locationManager;onCompletion:)
+    } // updatePositionAndScale3D(setup:scenePosition:locationNodeLocation:locationManager:onCompletion:)
 
     /// Converts distance from meters to SCNKit rendering order
     /// Constant multiplier eliminates flicker caused by slight distance variations
