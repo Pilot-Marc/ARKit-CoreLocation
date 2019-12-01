@@ -150,6 +150,7 @@ open class LocationNode: SCNNode {
         } else {
 
             //Calculates distance based on the distance within the scene, as the location isn't yet confirmed
+			// TODO: This computes to zero, we should investigate
             adjustedDistance = CLLocationDistance(position.distance(to: position))
 
             scale = SCNVector3(x: 1, y: 1, z: 1)
