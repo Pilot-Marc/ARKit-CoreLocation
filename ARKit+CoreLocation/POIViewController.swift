@@ -229,7 +229,7 @@ extension POIViewController {
 
 						let currentLocation = CLLocation(coordinate: points[i].coordinate, altitude: altitude)
 						let nextLocation = CLLocation(coordinate: points[i + 1].coordinate, altitude: altitude)
-						let pivotPoint3D = midPoint(currentLocation, nextLocation)
+						let pivotPoint3D = currentLocation.approxMidpoint(to: nextLocation)
 
 						// Joint Node (between segments)
 
@@ -556,29 +556,6 @@ extension POIViewController: LNTouchDelegate {
 }
 
 // MARK: - Helpers
-
-@available(iOS 11.0, *)
-extension POIViewController {
-
-    func midPoint(_ first: CLLocationCoordinate2D, _ second: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-		return CLLocationCoordinate2D(
-			latitude: (first.latitude + second.latitude) / 2,
-			longitude: (first.longitude + second.longitude) / 2
-		)
-
-	} // midPoint(_:_:)
-
-    func midPoint(_ first: CLLocation, _ second: CLLocation) -> CLLocation {
-        return CLLocation(
-            coordinate: CLLocationCoordinate2D(
-                latitude: (first.coordinate.latitude + second.coordinate.latitude) / 2,
-                longitude: (first.coordinate.longitude + second.coordinate.longitude) / 2
-            ),
-            altitude: (first.altitude + second.altitude) / 2
-        )
-    } // midPoint(_:_:)
-
-}
 
 extension DispatchQueue {
     func asyncAfter(timeInterval: TimeInterval, execute: @escaping () -> Void) {
